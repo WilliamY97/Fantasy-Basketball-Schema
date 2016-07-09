@@ -48,9 +48,9 @@ def registerPlayer(name):
     """
     db = connect()
     c = db.cursor()
-    c.execute("INSERT INTO Players (name) VALUES (%s)",(name,)")
-    rows = c.fetchall()
-    db.close()
+    c.execute("INSERT INTO Players (name) VALUES (%s)",(name,))
+    db.commit()
+    db.close();
 
 def playerStandings():
     """Returns a list of the players and their win records, sorted by wins.
@@ -65,7 +65,12 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
-
+    db = connect()
+    c = db.cursor()
+    c.execute("SELECT id,name,wins,matches FROM Standings ORDER BY wins DESC;")
+    standings = c.fetchall()
+    db.close()
+    return standings
 
 def reportMatch(winner, loser):
     """Records the outcome of a single match between two players.
