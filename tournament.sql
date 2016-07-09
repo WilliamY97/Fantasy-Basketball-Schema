@@ -8,6 +8,11 @@
 
 DROP DATABASE IF EXISTS tournament;
 CREATE DATABASE tournament;
+DROP TABLE IF EXISTS Matches;
+DROP TABLE IF EXISTS Players;
+DROP VIEW IF EXISTS Standings;
+DROP View IF EXISTS Count;
+DROP VIEW IF EXISTS Wins;
 
 \c tournament;
 
@@ -16,9 +21,13 @@ CREATE TABLE Players (
 	  		id   serial PRIMARY KEY
 );
 
+CREATE TABLE Potato (
+		  name   text
+);
+
 CREATE TABLE Matches (
 	id SERIAL primary key,
-	player int references layers(id),
+	player int references Players(id),
 	opponent int references Players(id),
 	result int
 );
