@@ -72,14 +72,24 @@ def playerStandings():
     db.close()
     return standings
 
-def reportMatch(winner, loser):
+def reportMatch(winner, loser, result):
     """Records the outcome of a single match between two players.
 
     Args:
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
- 
+    db = connect()
+    c = db.cursor()
+    if result:
+    """Insert winner, loser into placeholders using s"""
+        c.execute("INSERT INTO Matches (player,opponent,result) VALUES (%s,%s,1)",(winner,loser))
+        c.execute("INSERT INTO Matches (player,opponent,result) VALUES (%s,%s,1)",(loser,winner))
+    else:
+        c.execute("INSERT INTO Matches (player,opponent,result) VALUES (%s,%s,1)",(winner,loser))
+        c.execute("INSERT INTO Matches (player,opponent,result) VALUES (%s,%s,0)",(loser,winner))
+    db.commit()
+    db.close();
  
 def swissPairings():
     """Returns a list of pairs of players for the next round of a match.
